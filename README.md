@@ -1,75 +1,15 @@
-# React + TypeScript + Vite
+# Módulo 8 - Cloud: GitHub Pages (despliegue manual)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App Vite + React + TypeScript desplegada manualmente en GitHub Pages.
 
-Currently, two official plugins are available:
+## Enlace
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **App desplegada:** https://danivegi.github.io/modulo08-cloud-gh-pages-manual/
 
-## React Compiler
+## Cómo se despliega
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. `vite.config.ts` usa `base: './'` para que las rutas de los assets sean relativas, ya que GitHub Pages sirve la app en una subcarpeta (`/modulo08-cloud-gh-pages-manual/`) y no en la raíz del dominio.
+2. El script `npm run deploy` (definido en `package.json`) hace el build y, con el paquete `gh-pages`, publica el contenido de `dist` en la rama `gh-pages`.
+3. GitHub Pages está configurado para servir la rama `gh-pages` (Settings → Pages → Deploy from a branch).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+El despliegue es manual: la web solo se actualiza al ejecutar `npm run deploy`.
